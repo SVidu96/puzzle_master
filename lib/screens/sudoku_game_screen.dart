@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/sudoku_difficulty_dialog.dart';
-// import '../widgets/banner_ad_widget.dart';
 
 class SudokuGameScreen extends StatefulWidget {
   const SudokuGameScreen({super.key});
@@ -210,13 +209,13 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
       return Colors.grey[200]!;
     }
     if (row == _selectedRow && col == _selectedCol) {
-      return Colors.blue.withOpacity(0.3);
+      return Colors.blue.withValues(alpha: 0.3);
     }
     if (_board[row][col] != 0) {
       if (!_isNumberValidInPosition(row, col)) {
-        return Colors.red.withOpacity(0.3);
+        return Colors.red.withValues(alpha: 0.3);
       }
-      return Colors.green.withOpacity(0.1);
+      return Colors.green.withValues(alpha: 0.1);
     }
     return Colors.white;
   }
@@ -268,7 +267,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.green.withOpacity(0.1),
+                  Colors.green.withValues(alpha: 0.1),
                   Colors.grey[100]!,
                 ],
               ),
@@ -280,7 +279,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                     height: 50,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
+                      color: Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -363,7 +362,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
+                          color: Colors.grey.withValues(alpha: 0.1),
                           spreadRadius: 1,
                           blurRadius: 5,
                           offset: const Offset(0, -2),
@@ -379,7 +378,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.green.withOpacity(0.1),
+                              color: Colors.green.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
                                 color: Colors.green,
@@ -417,7 +416,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withValues(alpha: 0.2),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../models/word_list.dart';
 import '../models/word_hints.dart';
 import '../widgets/difficulty_dialog.dart';
 import '../widgets/hangman_figure.dart';
-// import '../widgets/banner_ad_widget.dart';
 
 class HangmanScreen extends StatefulWidget {
   const HangmanScreen({super.key});
@@ -108,7 +106,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              statusColor.withOpacity(0.1),
+              statusColor.withValues(alpha: 0.1),
               Colors.grey[100]!,
             ],
           ),
@@ -120,7 +118,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                 height: 50,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: _getStatusColor().withOpacity(0.1),
+                  color: _getStatusColor().withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
@@ -154,10 +152,10 @@ class _HangmanScreenState extends State<HangmanScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.1),
+                  color: statusColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: statusColor.withOpacity(0.3),
+                    color: statusColor.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),
@@ -190,7 +188,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
+                      color: Colors.grey.withValues(alpha: 0.1),
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: const Offset(0, 2),
@@ -211,7 +209,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -272,7 +270,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
+                      color: Colors.grey.withValues(alpha: 0.1),
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: const Offset(0, -2),
@@ -315,7 +313,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
           padding: EdgeInsets.zero,
           backgroundColor: isGuessed
               ? (isCorrect ? Colors.green : Colors.red)
-              : _getStatusColor().withOpacity(0.1),
+              : _getStatusColor().withValues(alpha: 0.1),
           foregroundColor: isGuessed
               ? Colors.white
               : _getStatusColor(),
