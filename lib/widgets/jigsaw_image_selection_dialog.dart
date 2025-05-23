@@ -75,17 +75,22 @@ class _JigsawImageSelectionDialogState
     ).then((difficulty) {
       if (difficulty != null && _selectedImagePath != null) {
         // Pop the image selection dialog itself and return the result
-        Navigator.of(context).pop(
-          JigsawSelectionResult(
-            imagePath: _selectedImagePath!,
-            difficulty: difficulty,
-          ),
-        );
+        if (mounted) { // Check context.mounted
+          Navigator.of(context).pop(
+            JigsawSelectionResult(
+              imagePath: _selectedImagePath!,
+              difficulty: difficulty,
+            ),
+          );
+        }
       } else {
         // If difficulty selection was cancelled, reset image selection
-        setState(() {
-          _selectedImagePath = null;
-        });
+        // Check mounted for setState as well, good practice
+        if (mounted) {
+          setState(() {
+            _selectedImagePath = null;
+          });
+        }
       }
     });
   }
@@ -136,7 +141,7 @@ class _JigsawImageSelectionDialogState
                               fit: BoxFit.cover,
                               // Add an error builder for better UX if an image is missing
                               onError: (exception, stackTrace) {
-                                print('Error loading image: $path, $exception');
+                                debugPrint('Error loading image: $path, $exception');
                               },
                             ),
                             border: Border.all(

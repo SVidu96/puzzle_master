@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
-import 'package:puzzle_master/models/jigsaw_piece_model.dart';
-import 'package:puzzle_master/models/jigsaw_puzzle_model.dart';
-import 'package:puzzle_master/utils/jigsaw_utils.dart';
-import 'package:puzzle_master/widgets/jigsaw_image_selection_dialog.dart';
-import 'package:puzzle_master/widgets/jigsaw_piece_widget.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:jigsaw_puzzle_app/models/jigsaw_piece_model.dart';
+import 'package:jigsaw_puzzle_app/models/jigsaw_puzzle_model.dart';
+import 'package:jigsaw_puzzle_app/utils/jigsaw_utils.dart';
+import 'package:jigsaw_puzzle_app/widgets/jigsaw_image_selection_dialog.dart';
+import 'package:jigsaw_puzzle_app/widgets/jigsaw_piece_widget.dart';
 
 class JigsawPuzzleScreen extends StatefulWidget {
   const JigsawPuzzleScreen({super.key});
@@ -329,10 +329,10 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
                                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                                     // Wrap with Draggable later
                                     GestureDetector(
-                                      onPanStart: (details) => _onPiecePanStart(piece, details.globalPosition, isFromTray: true),
-                                      onPanUpdate: (details) => _onPiecePanUpdate(piece, details.globalPosition),
-                                      onPanEnd: (details) => _onPiecePanEnd(piece),
-                                      onTap: () => _onPieceTap(piece, isFromTray: true),
+                                      onPanStart: (details) => this._onPiecePanStart(piece, details.globalPosition, isFromTray: true),
+                                      onPanUpdate: (details) => this._onPiecePanUpdate(piece, details.globalPosition),
+                                      onPanEnd: (details) => this._onPiecePanEnd(piece),
+                                      onTap: () => this._onPieceTap(piece, isFromTray: true),
                                       child: JigsawPieceWidget(
                                         piece: piece,
                                         isSelected: _selectedPiece?.id == piece.id,

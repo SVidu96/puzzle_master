@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
@@ -44,7 +43,7 @@ class JigsawPiecePainter extends CustomPainter {
     // Optionally draw a border
     if (borderColor != null) {
       final Paint borderPaint = Paint()
-        ..color = isSelected ? Colors.blue.withOpacity(0.7) : borderColor!
+        ..color = isSelected ? Colors.blue.withAlpha((255 * 0.7).round()) : borderColor!
         ..style = PaintingStyle.stroke
         ..strokeWidth = isSelected ? borderWidth * 2.5 : borderWidth;
       canvas.drawRect(dstRect, borderPaint);

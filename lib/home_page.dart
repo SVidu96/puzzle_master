@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
           final horizontalPadding = isSmallScreen ? 12.0 : 16.0;
           final verticalSpacing = isSmallScreen ? 8.0 : 10.0;
           final gridSpacing = isSmallScreen ? 12.0 : 20.0;
-          final gridPadding = isSmallScreen ? 12.0 : 20.0;
+          // final gridPadding = isSmallScreen ? 12.0 : 20.0; // Removed as it's unused
           final iconSize = isSmallScreen ? 24.0 : 28.0;
           final topPadding = isSmallScreen ? 20.0 : 40.0;
           

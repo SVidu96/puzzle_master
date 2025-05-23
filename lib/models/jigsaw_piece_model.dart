@@ -53,7 +53,7 @@ class JigsawPiece {
       other is JigsawPiece && runtimeType == other.runtimeType && id == other.id;
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => id.hashCode; // Assuming this.id was here before based on common patterns
 
   @override
   String toString() {

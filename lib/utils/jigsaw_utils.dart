@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart'; // For Size, Offset
-import 'package:puzzle_master/models/jigsaw_piece_model.dart';
-import 'package:puzzle_master/models/jigsaw_puzzle_model.dart';
+import 'package:jigsaw_puzzle_app/models/jigsaw_piece_model.dart';
+import 'package:jigsaw_puzzle_app/models/jigsaw_puzzle_model.dart';
 
 class JigsawUtils {
   /// Slices the given [image] into a grid of [gridSize] and returns a [JigsawPuzzle].
@@ -192,7 +192,7 @@ class JigsawUtils {
     // A more advanced system might involve a Disjoint Set Union (DSU) data structure
     // to manage groups of connected pieces.
 
-    print("Snapped piece ${piece2.id} to ${piece1.id}");
+    debugPrint("Snapped piece ${piece2.id} to ${piece1.id}");
   }
 
   /// Rotates a piece by 90 degrees clockwise.

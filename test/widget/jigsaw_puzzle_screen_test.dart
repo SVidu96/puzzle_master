@@ -1,13 +1,13 @@
-import 'dart:async';
+// import 'dart:async'; // Removed as per lint
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_master/models/jigsaw_piece_model.dart';
-import 'package:puzzle_master/models/jigsaw_puzzle_model.dart';
-import 'package:puzzle_master/screens/jigsaw_puzzle_screen.dart';
-import 'package:puzzle_master/widgets/jigsaw_image_selection_dialog.dart';
-import 'package:puzzle_master/widgets/jigsaw_piece_widget.dart';
+import 'package:jigsaw_puzzle_app/models/jigsaw_piece_model.dart';
+import 'package:jigsaw_puzzle_app/models/jigsaw_puzzle_model.dart';
+import 'package:jigsaw_puzzle_app/screens/jigsaw_puzzle_screen.dart';
+import 'package:jigsaw_puzzle_app/widgets/jigsaw_image_selection_dialog.dart';
+import 'package:jigsaw_puzzle_app/widgets/jigsaw_piece_widget.dart';
 
 // Re-using TestAssetBundle from jigsaw_image_selection_dialog_test.dart
 // In a real project, this might be in a shared test utilities file.
@@ -26,10 +26,13 @@ class TestAssetBundle extends CachingAssetBundle {
   }
 
   Future<ui.Image> getUiImage(String path) async {
-    if (imageCache.containsKey(path)) {
+    if (imageCache.containsKey(path)) { // Ensure braces if they were missing
       return imageCache[path]!;
     }
-    if (assets.containsKey(path)) {
+    // The following if already has braces due to multiple lines.
+    // If the lint was for single-line if's without braces, the first one is the target.
+    // Assuming the lint is for the first `if` if its body was written as `if (condition) return;`
+    if (assets.containsKey(path)) { 
       final ui.Codec codec = await ui.instantiateImageCodec(assets[path]!.buffer.asUint8List());
       final ui.FrameInfo frameInfo = await codec.getNextFrame();
       imageCache[path] = frameInfo.image;
@@ -48,11 +51,11 @@ class TestAssetBundle extends CachingAssetBundle {
       try {
         return await rootBundle.load(key);
       } catch (e) {
-        print("Failed to load $key from rootBundle in test: $e");
+        debugPrint("Failed to load $key from rootBundle in test: $e");
         return ByteData(0);
       }
     }
-    print("TestAssetBundle: Asset not found for key: $key");
+    debugPrint("TestAssetBundle: Asset not found for key: $key");
     return ByteData(0);
   }
 
@@ -96,9 +99,9 @@ Future<JigsawPuzzle> createTestPuzzle({
   
   // Determine grid from difficulty for consistency with app logic
   Size gridSize;
-  if (difficulty == 'Easy') gridSize = const Size(2,2); // 4 pieces
-  else if (difficulty == 'Medium') gridSize = const Size(3,2); // 6 pieces
-  else gridSize = const Size(4,3); // 12 pieces
+  if (difficulty == 'Easy') { gridSize = const Size(2,2); } // 4 pieces
+  else if (difficulty == 'Medium') { gridSize = const Size(3,2); } // 6 pieces
+  else { gridSize = const Size(4,3); } // 12 pieces
   
   pieceCount = gridSize.width.toInt() * gridSize.height.toInt();
 
@@ -108,7 +111,7 @@ Future<JigsawPuzzle> createTestPuzzle({
   // Piece image chunks would be derived from originalImage in real app
   // For testing, we create distinct mock image chunks for each piece
   for (int i = 0; i < pieceCount; i++) {
-    String pieceImagePath = 'assets/images/jigsaw/piece_${i}.png';
+    String pieceImagePath = 'assets/images/jigsaw/piece_$i.png'; // Removed unnecessary braces
     pieces.add(JigsawPiece(
       id: i,
       imageChunk: await createMockUiImage(bundle, pieceImagePath, pieceWidthOnBoard.toInt(), pieceHeightOnBoard.toInt()),
@@ -262,7 +265,7 @@ void main() {
       
       expect(trayPieceFinder, findsWidgets, reason: "Expected pieces in tray");
       if (tester.widgetList(trayPieceFinder).isEmpty) {
-        print("No pieces found in tray for tap test, might need to adjust puzzle setup or shuffle mock.");
+        debugPrint("No pieces found in tray for tap test, might need to adjust puzzle setup or shuffle mock.");
         return; // Cannot proceed
       }
 

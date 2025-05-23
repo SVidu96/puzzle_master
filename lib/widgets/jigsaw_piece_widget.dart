@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_master/models/jigsaw_piece_model.dart';
-import 'package:puzzle_master/widgets/jigsaw_piece_painter.dart';
+import 'package:jigsaw_puzzle_app/models/jigsaw_piece_model.dart';
+import 'package:jigsaw_puzzle_app/widgets/jigsaw_piece_painter.dart';
 
 class JigsawPieceWidget extends StatelessWidget {
   final JigsawPiece piece;
@@ -24,7 +24,7 @@ class JigsawPieceWidget extends StatelessWidget {
         painter: JigsawPiecePainter(
           imageChunk: piece.imageChunk,
           rotationAngle: piece.currentRotation,
-          borderColor: Colors.black.withOpacity(0.5),
+          borderColor: Colors.black.withAlpha((255 * 0.5).round()),
           borderWidth: 1.0,
           isSelected: isSelected,
         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_master/widgets/jigsaw_image_selection_dialog.dart';
+import 'package:jigsaw_puzzle_app/widgets/jigsaw_image_selection_dialog.dart';
 import 'package:flutter/services.dart'; // Required for ByteData
-import 'dart:typed_data'; // Required for Uint8List
+// import 'dart:typed_data'; // Required for Uint8List - Removed as per lint
 import 'dart:ui' as ui; // Required for ui.Codec
 
 // A basic implementation of an AssetBundle that allows us to mock image loading.
@@ -29,13 +29,13 @@ class TestAssetBundle extends CachingAssetBundle {
       try {
         return await rootBundle.load(key);
       } catch (e) {
-        print("Failed to load $key from rootBundle in test: $e");
+        debugPrint("Failed to load $key from rootBundle in test: $e");
         // Return a minimal valid ByteData if absolutely necessary to prevent crash,
         // though ideally tests should mock all essential assets.
         return ByteData(0); 
       }
     }
-    print("TestAssetBundle: Asset not found for key: $key");
+    debugPrint("TestAssetBundle: Asset not found for key: $key");
     // Return an empty ByteData or throw an exception if the asset is critical
     // For some image tests, an empty ByteData might lead to decode errors.
     // throw FlutterError('Asset not found: $key');
@@ -76,20 +76,8 @@ void main() {
     }
   });
 
-  Future<JigsawSelectionResult?> showTestDialog(WidgetTester tester) {
-    return showDialog<JigsawSelectionResult>(
-      context: tester.element(find.byType(MaterialApp)), // Use app context
-      builder: (BuildContext context) {
-        return const JigsawImageSelectionDialog();
-      },
-    );
-  }
-
-  Widget buildTestApp(Widget child) {
-    return MaterialApp(
-      home: Scaffold(body: child),
-    );
-  }
+  // Removed unused helper function showTestDialog
+  // Removed unused helper function buildTestApp
 
   testWidgets('JigsawImageSelectionDialog displays images and allows selection', (WidgetTester tester) async {
     // Provide the mock asset bundle
