@@ -57,13 +57,13 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
         _gameBoardSize = renderBox.size;
         _gameBoardOffset = renderBox.localToGlobal(Offset.zero);
       });
-      print("Game board size: $_gameBoardSize, Offset: $_gameBoardOffset");
+      debugPrint("Game board size: $_gameBoardSize, Offset: $_gameBoardOffset");
        // If a puzzle exists, re-initialize with correct board size
       if (_currentPuzzle != null && _currentPuzzleImageKey != null) {
         _initializePuzzle(_currentPuzzleImageKey!, _currentPuzzle!.difficulty);
       }
     } else {
-       print("Game board context not available yet.");
+       debugPrint("Game board context not available yet.");
     }
   }
 
@@ -96,7 +96,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
            if (_gameBoardSize != Size.zero) {
             _initializePuzzle(imagePath, difficulty);
            } else {
-            print("Error: Game board size not determined. Cannot initialize puzzle.");
+            debugPrint("Error: Game board size not determined. Cannot initialize puzzle.");
             // Show an error to the user or retry logic
              setState(() => _isLoading = false);
            }
@@ -122,7 +122,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print("Error initializing puzzle: $e");
+      debugPrint("Error initializing puzzle: $e");
       setState(() {
         _isLoading = false;
       });
@@ -237,7 +237,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
                                    // Check if mounted because this is in a callback
                                   if(mounted && (_gameBoardSize.width.round() != boardDisplayWidth.round() || 
                                       _gameBoardSize.height.round() != boardDisplayHeight.round())) {
-                                    print("GameBoard size updated by LayoutBuilder: W$boardDisplayWidth H$boardDisplayHeight");
+                                    debugPrint("GameBoard size updated by LayoutBuilder: W$boardDisplayWidth H$boardDisplayHeight");
                                     setState(() {
                                       _gameBoardSize = Size(boardDisplayWidth, boardDisplayHeight);
                                     });
@@ -356,7 +356,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
       // For now, prevent dragging of already assembled individual pieces
       // unless we implement group dragging.
       // If we want to allow detaching, that's another logic path.
-      print("Piece ${piece.id} is assembled. Dragging locked/group drag TBD.");
+      debugPrint("Piece ${piece.id} is assembled. Dragging locked/group drag TBD.");
       return;
     }
 
@@ -423,10 +423,19 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
           // More advanced: If boardPiece is part of an assembly, selectedPiece snaps to the whole group.
           // For now, basic piece-to-piece snapping.
           
+          // Dynamic snap tolerance based on piece size.
+          // Ensure _currentPuzzle and its pieces are available.
+          double dynamicSnapTolerance = 20.0; // Default fallback
+          if (_currentPuzzle != null && _currentPuzzle!.pieces.isNotEmpty) {
+            // Use the width of the piece being dragged (_selectedPiece)
+            // as it's directly relevant to the interaction.
+            dynamicSnapTolerance = _selectedPiece!.width * 0.25; // 25% of the piece width
+          }
+
           if (JigsawUtils.shouldSnap(
             piece1: boardPiece, // The piece already on the board (potentially an anchor)
             piece2: _selectedPiece!, // The piece being dragged
-            snapTolerance: 20.0, // TODO: make this dynamic based on piece size or difficulty
+            snapTolerance: dynamicSnapTolerance,
             pieceGridSize: _currentPuzzle!.pieceGridSize,
             boardSize: _currentPuzzle!.boardSize,
           )) {
@@ -442,7 +451,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
             _mergeConnectedPieces(boardPiece); // Ensure both sides propagate assembly
 
             snapped = true;
-            print("Piece ${_selectedPiece!.id} snapped with ${boardPiece.id}");
+            debugPrint("Piece ${_selectedPiece!.id} snapped with ${boardPiece.id}");
             break; 
           }
         }
@@ -455,7 +464,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
         // currentPosition should already be very close to correctPosition
         _selectedPiece!.currentPosition = _selectedPiece!.correctPosition;
         _selectedPiece!.currentRotation = _selectedPiece!.correctRotation;
-        print("Piece ${_selectedPiece!.id} placed in correct solo position.");
+        debugPrint("Piece ${_selectedPiece!.id} placed in correct solo position.");
         snapped = true; // Treat as "snapped" for completion check purposes
     }
 
@@ -471,7 +480,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
        // If piece is entirely outside the board and not snapped, move back to tray
       if (_boardPieces.remove(_selectedPiece!)) {
         _displayedPieces.add(_selectedPiece!);
-         print("Piece ${_selectedPiece!.id} returned to tray.");
+         debugPrint("Piece ${_selectedPiece!.id} returned to tray.");
       }
     }
 
@@ -489,7 +498,7 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
 
   void _onPieceTap(JigsawPiece piece, {bool isFromTray = false}) {
      if (piece.isAssembled) {
-      print("Piece ${piece.id} is assembled. Rotation locked/group rotation TBD.");
+      debugPrint("Piece ${piece.id} is assembled. Rotation locked/group rotation TBD.");
       // Potentially allow selecting an entire assembled group later.
       return;
     }
@@ -502,21 +511,23 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
         _selectedPiece = piece; 
       }
     });
-    print("Piece ${piece.id} rotated. New rotation: ${piece.currentRotation}");
+    debugPrint("Piece ${piece.id} rotated. New rotation: ${piece.currentRotation}");
   }
 
   void _mergeConnectedPieces(JigsawPiece startingPiece) {
     if (!startingPiece.isAssembled) return;
 
     Set<int> groupToMerge = {startingPiece.id, ...startingPiece.connectedTo};
-    List<JigsawPiece> allPuzzlePieces = _currentPuzzle!.pieces;
+    List<JigsawPiece> allPuzzlePieces = _currentPuzzle!.pieces; // Use _currentPuzzle safely
     bool changedInLoop;
 
     do {
       changedInLoop = false;
       Set<int> newConnections = Set<int>.from(groupToMerge);
       for (int pieceIdInGroup in groupToMerge) {
-        JigsawPiece? pieceInGroup = allPuzzlePieces.firstWhere((p) => p.id == pieceIdInGroup);
+        // Since groupToMerge contains IDs from _currentPuzzle.pieces,
+        // firstWhere will find a non-null piece.
+        JigsawPiece pieceInGroup = allPuzzlePieces.firstWhere((p) => p.id == pieceIdInGroup);
         for (int connectedId in pieceInGroup.connectedTo) {
           if (newConnections.add(connectedId)) {
             changedInLoop = true;
@@ -528,9 +539,11 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
 
     // Now, ensure all pieces in this group share the same connection set and assembled status
     for (int pieceIdInGroup in groupToMerge) {
-       JigsawPiece? pieceToUpdate = allPuzzlePieces.firstWhere((p) => p.id == pieceIdInGroup);
+       // pieceToUpdate will be non-null for the same reason as pieceInGroup
+       JigsawPiece pieceToUpdate = allPuzzlePieces.firstWhere((p) => p.id == pieceIdInGroup);
         pieceToUpdate.isAssembled = true;
-        pieceToUpdate.connectedTo.addAll(groupToMerge.where((id) => id != pieceToUpdate!.id)); // Add all others in group
+        // The '!' was on pieceToUpdate.id, which is fine if pieceToUpdate is non-nullable.
+        pieceToUpdate.connectedTo.addAll(groupToMerge.where((id) => id != pieceToUpdate.id)); 
     }
 
     // Update the positions of all pieces in the group relative to the startingPiece's new snapped position
@@ -548,7 +561,8 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
 
     for (int pieceIdInGroup in groupToMerge) {
       if (pieceIdInGroup == startingPiece.id) continue;
-      JigsawPiece? memberPiece = allPuzzlePieces.firstWhere((p) => p.id == pieceIdInGroup);
+      // memberPiece will be non-null
+      JigsawPiece memberPiece = allPuzzlePieces.firstWhere((p) => p.id == pieceIdInGroup);
       
       final Offset correctOffsetFromAnchor = memberPiece.correctPosition - anchorCorrectPos;
       memberPiece.currentPosition = anchorCurrentPos + correctOffsetFromAnchor;
@@ -557,17 +571,21 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
     }
      // After merging, update _boardPieces to reflect any changes (e.g. if a piece was in displayedPieces but now assembled)
     setState(() {
-      _boardPieces = _currentPuzzle!.pieces.where((p) => _boardPieces.any((bp) => bp.id == p.id) || groupToMerge.contains(p.id)).toList();
-      _displayedPieces.removeWhere((p) => groupToMerge.contains(p.id));
+      // Ensure _currentPuzzle is not null here before accessing its pieces
+      // Adding a null check for safety, though _mergeConnectedPieces is called when _currentPuzzle should be non-null.
+      if (_currentPuzzle != null) {
+        _boardPieces = _currentPuzzle!.pieces.where((p) => _boardPieces.any((bp) => bp.id == p.id) || groupToMerge.contains(p.id)).toList();
+        _displayedPieces.removeWhere((p) => groupToMerge.contains(p.id));
+      }
     });
-
   }
 
-
   void _showCompletionDialog() {
+    // Ensure context is valid and mounted before showing dialog
+    if (!mounted) return;
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) { // Renamed to avoid confusion with widget's context
         return AlertDialog(
           title: const Text('Congratulations!'),
           content: const Text('You have completed the puzzle!'),
@@ -575,14 +593,14 @@ class _JigsawPuzzleScreenState extends State<JigsawPuzzleScreen> {
             TextButton(
               child: const Text('Play Again'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContext).pop(); // Use dialogContext
                 _restartPuzzle();
               },
             ),
             TextButton(
               child: const Text('New Game'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContext).pop(); // Use dialogContext
                 _showNewGameDialog();
               },
             ),
