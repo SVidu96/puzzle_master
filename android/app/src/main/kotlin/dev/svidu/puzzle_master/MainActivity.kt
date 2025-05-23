@@ -1,4 +1,4 @@
-package com.example.puzzle_master
+package dev.svidu.puzzle_master
 
 import io.flutter.embedding.android.FlutterActivity
 

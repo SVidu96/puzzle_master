@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_master/screens/game_selection_page.dart';
+import 'package:puzzle_master/home_page.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Poppins',
       ),
-      home: const GameSelectionPage(),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

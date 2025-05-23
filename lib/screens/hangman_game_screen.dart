@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/word_list.dart';
 import '../models/word_hints.dart';
-import '../widgets/difficulty_dialog.dart';
+import '../widgets/hangman_difficulty_dialog.dart';
 import '../widgets/hangman_figure.dart';
 
 class HangmanScreen extends StatefulWidget {
@@ -34,6 +34,8 @@ class _HangmanScreenState extends State<HangmanScreen> {
       context: context,
       builder: (context) => const DifficultyDialog(),
     );
+
+    if(!mounted) return;
 
     if (difficulty != null) {
       setState(() {
@@ -180,7 +182,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -278,7 +280,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                   ],
                 ),
                 child: Wrap(
-                  spacing: 0.8,
+                  spacing: 1,
                   runSpacing: 10,
                   alignment: WrapAlignment.center,
                   children: [
@@ -305,8 +307,8 @@ class _HangmanScreenState extends State<HangmanScreen> {
     final isCorrect = _word!.contains(letter);
     
     return SizedBox(
-      width: 38,
-      height: 38,
+      width: 28,
+      height: 28,
       child: ElevatedButton(
         onPressed: isGuessed ? null : () => _guessLetter(letter),
         style: ElevatedButton.styleFrom(

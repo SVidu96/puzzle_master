@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.svidu96.dev.puzzle_master"
+    namespace = "dev.svidu.puzzle_master"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -20,30 +20,31 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.svidu96.dev.puzzle_master"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        applicationId = "dev.svidu.puzzle_master"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     signingConfigs {
         create("release") {
-            storeFile = file("../upload-keystore.jks")
-            storePassword = "123asdf456"
-            keyAlias = "upload"
-            keyPassword = "123asdf456"
+            storeFile = file("release-key.jks")
+            storePassword = "1qaz0plm"
+            keyAlias = "keyAlias"
+            keyPassword = "1qaz0plm"
         }
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
