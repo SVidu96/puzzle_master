@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jigsaw_puzzle_app/widgets/jigsaw_image_selection_dialog.dart';
+import 'package:puzzle_master/widgets/jigsaw_image_selection_dialog.dart';
 import 'package:flutter/services.dart'; // Required for ByteData
 import 'dart:typed_data'; // Required for Uint8List
 import 'dart:ui' as ui; // Required for ui.Codec

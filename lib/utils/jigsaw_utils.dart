@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart'; // For Size, Offset
-import 'package:jigsaw_puzzle_app/models/jigsaw_piece_model.dart';
-import 'package:jigsaw_puzzle_app/models/jigsaw_puzzle_model.dart';
+import 'package:puzzle_master/models/jigsaw_piece_model.dart';
+import 'package:puzzle_master/models/jigsaw_puzzle_model.dart';
 
 class JigsawUtils {
   /// Slices the given [image] into a grid of [gridSize] and returns a [JigsawPuzzle].
