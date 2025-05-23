@@ -24,7 +24,7 @@ class JigsawPiece {
     required this.height,
     this.isAssembled = false,
     Set<int>? connectedTo,
-  }) : this.connectedTo = connectedTo ?? {};
+  }) : connectedTo = connectedTo ?? {};
 
   /// Checks if the piece is currently at its correct position and rotation.
   bool isCorrectlyPlaced() {

@@ -3,11 +3,11 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jigsaw_puzzle_app/models/jigsaw_piece_model.dart';
-import 'package:jigsaw_puzzle_app/models/jigsaw_puzzle_model.dart';
-import 'package:jigsaw_puzzle_app/screens/jigsaw_puzzle_screen.dart';
-import 'package:jigsaw_puzzle_app/widgets/jigsaw_image_selection_dialog.dart';
-import 'package:jigsaw_puzzle_app/widgets/jigsaw_piece_widget.dart';
+import 'package:puzzle_master/models/jigsaw_piece_model.dart';
+import 'package:puzzle_master/models/jigsaw_puzzle_model.dart';
+import 'package:puzzle_master/screens/jigsaw_puzzle_screen.dart';
+import 'package:puzzle_master/widgets/jigsaw_image_selection_dialog.dart';
+import 'package:puzzle_master/widgets/jigsaw_piece_widget.dart';
 
 // Re-using TestAssetBundle from jigsaw_image_selection_dialog_test.dart
 // In a real project, this might be in a shared test utilities file.
