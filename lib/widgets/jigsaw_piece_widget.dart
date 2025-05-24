@@ -1,10 +1,10 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:puzzle_master/models/jigsaw_piece_model.dart';
-import 'package:puzzle_master/widgets/jigsaw_piece_painter.dart';
+import '../models/jigsaw_piece.dart';
 
 class JigsawPieceWidget extends StatelessWidget {
   final JigsawPiece piece;
-  final bool isSelected; // To highlight if the piece is selected or being dragged
+  final bool isSelected;
 
   const JigsawPieceWidget({
     super.key,
@@ -14,19 +14,31 @@ class JigsawPieceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The CustomPaint widget will take the size of the piece itself.
-    // The JigsawPiecePainter will then draw the imageChunk centered and rotated
-    // within these bounds.
-    return SizedBox(
-      width: piece.width,
-      height: piece.height,
-      child: CustomPaint(
-        painter: JigsawPiecePainter(
-          imageChunk: piece.imageChunk,
-          rotationAngle: piece.currentRotation,
-          borderColor: Colors.black.withAlpha((255 * 0.5).round()),
-          borderWidth: 1.0,
-          isSelected: isSelected,
+    return Transform.rotate(
+      angle: piece.rotation,
+      child: Container(
+        width: piece.width,
+        height: piece.height,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected ? Colors.blue : Colors.grey,
+            width: isSelected ? 2 : 1,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.3),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                  )
+                ]
+              : null,
+        ),
+        child: ClipRect(
+          child: RawImage(
+            image: piece.image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
