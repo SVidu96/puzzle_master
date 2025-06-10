@@ -86,7 +86,7 @@ class AppAboutDialog extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             _buildInfoRow(Icons.business, 'By', 'SVidu96.dev'),
-            _buildInfoRow(Icons.numbers, 'Version', '1.0.4'),
+            _buildInfoRow(Icons.numbers, 'Version', '1.0.5'),
             _buildInfoRow(
               Icons.email,
               'Contact',

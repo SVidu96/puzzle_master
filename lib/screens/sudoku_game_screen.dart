@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puzzle_master/widgets/banner_ad.dart';
 import '../widgets/sudoku_difficulty_dialog.dart';
 
 class SudokuGameScreen extends StatefulWidget {
@@ -380,6 +381,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                               ),
                             ),
                           ),
+                          BannerAdUnit(),
                           Container(
                             padding: EdgeInsets.all(isSmallScreen ? 8 : 16),
                             decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puzzle_master/widgets/banner_ad.dart';
 import '../models/word_list.dart';
 import '../models/word_hints.dart';
 import '../widgets/hangman_difficulty_dialog.dart';
@@ -265,6 +266,7 @@ class _HangmanScreenState extends State<HangmanScreen> {
                 ),
               ],
               const Spacer(),
+              BannerAdUnit(),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
