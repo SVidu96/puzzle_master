@@ -86,7 +86,7 @@ class AppAboutDialog extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             _buildInfoRow(Icons.business, 'By', 'SVidu96.dev'),
-            _buildInfoRow(Icons.numbers, 'Version', '1.0.1 (Beta)'),
+            _buildInfoRow(Icons.numbers, 'Version', '1.0.4'),
             _buildInfoRow(
               Icons.email,
               'Contact',
@@ -99,7 +99,7 @@ class AppAboutDialog extends StatelessWidget {
               'Website',
               'www.SVidu96.dev',
               isLink: true,
-              onTap: () => _launchUrl('https://www.SVidu96.dev'),
+              onTap: () => _launchUrl('https://www.SVidu96dev.vercel.app'),
             ),
             const SizedBox(height: 20),
             Row(
