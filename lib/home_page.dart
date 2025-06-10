@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:puzzle_master/screens/hangman_game_screen.dart';
 import 'package:puzzle_master/screens/sudoku_game_screen.dart';
+import 'package:puzzle_master/screens/jigsaw_puzzle_screen.dart';
 import 'package:puzzle_master/widgets/about_dialog.dart';
 import 'package:puzzle_master/widgets/game_card.dart';
 
@@ -140,6 +141,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const SudokuGameScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          GameCard(
+                            title: 'Jigsaw Puzzle',
+                            description: 'Arrange the pieces to complete the picture!',
+                            icon: Icons.extension,
+                            color: const Color(0xFFFF9F1C),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const JigsawPuzzleScreen(),
                                 ),
                               );
                             },
