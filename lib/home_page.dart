@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:puzzle_master/screens/hangman_game_screen.dart';
 import 'package:puzzle_master/screens/sudoku_game_screen.dart';
 import 'package:puzzle_master/widgets/about_dialog.dart';
+import 'package:puzzle_master/widgets/banner_ad.dart';
 import 'package:puzzle_master/widgets/game_card.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -148,6 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
+                  BannerAdUnit()
                 ],
               ),
             ),
